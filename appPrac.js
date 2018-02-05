@@ -32,29 +32,10 @@ app.get('/',function (req,res) {
     });
 })*/
 app.get('/',function (req,res) {
-    request.get({url:'https://www.qu.la/book/5443/',encoding:null},function(err,response,body){
+    request.get({url:'https://www.tianyancha.com/search?key=%E5%A4%A7%E8%BF%9E%E6%B1%87%E8%9E%8D&checkFrom=searchBox',encoding:null},function(err,response,body){
        /* var buf = iconv.decode(body, 'gb2312');*/
         var $ = cheerio.load(body);
-        var arr = [];
-        $('#list dd').each(function(index, el) {
-            var str = '';
-            if(index !=0 && index < 5){
-                /*console.log($(this).attr('href'));*/
-                arr.push($(this).text())
-                str = $(this).find('a').attr('href');
-                console.log(str)
-                request.get({
-                    url: "https://www.qu.la"+str,
-                    async: false
-                },function (errs,resp,bodys) {
-                    var $1 = cheerio.load(bodys);
-                    arr.push($1('#content').text())
-                    console.log($1('#content').text());
-
-                })
-            }
-        });
-        res.send(arr);
+        res.send($('.f13').html());
     });
 })
 
