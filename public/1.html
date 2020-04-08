@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./js/jquery.js"></script>
+</head>
+<body>
+<input style='height: 20px;width: 600px;' id='swagger_api'><br />
+<input style='height: 20px;width: 600px;' id='prefix'><br />
+<input type='button' value='导出' id='search_btn'>
+</body>
+<script>
+    $("#search_btn").click(function () {
+        $.ajax({
+            type: 'GET',
+            url: '/spider?url='+ $("#swagger_api").val() +'&prefix=' + $("#prefix").val(),
+            success: function (result) {
+                var aTag = document.createElement('a');
+                var blob = new Blob([result]);
+                aTag.download = 'api.js';
+                aTag.href = URL.createObjectURL(blob);
+                aTag.click();
+                URL.revokeObjectURL(blob);
+            }
+        })
+    })
+</script>
+</html>

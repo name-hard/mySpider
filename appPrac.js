@@ -11,34 +11,33 @@ charset(request);*/
 var fs = require('fs');
 var queryString = require('querystring');
 var app = express();
-/*app.use(express.static('public'));
+
 app.get('/',function (req,res) {
-    request.get({
-        url:'http://www.dygang.net/',
-        encoding:null
-        /!*form:queryString.parse('type=live&params=%7B%22%24control%22%3A%7B%22schema%22%3A%22index%22%7D%2C%22%24og_title%22%3A%22DetailViewController%22%7D&linkedme_key=e773bfb3454f475c3969de086526c62c&session_id=1513911717564&identity_id=4218080914047048&source=Web&sdk_version=web1.0.2&timestamp=1513911716737&sign=&h5_url=http%3A%2F%2F36kr.com%2F&deeplink_md5=8acb999381b977a885fc2e92ddded8bc&tags=&channel=&feature=&stage=&deeplink_md5_new=82539b3ea86d74e342850fb5e824b1a9&os=Windows')*!/
+    let data = {}
+    request({
+        url:"http://192.168.0.221:7002/issues/?filter=-4",
+        // method: "POST", // 请求方式，默认为get
+        rejectUnauthorized:false,
+        // body: JSON.stringify(data), // post参数字符串
+        gzip:true,
+        headers:{
+            "Accept":"application/json, text/javascript, */*; q=0.01",
+            "Accept-Encoding":"gzip, deflate, br",
+            "Accept-Language":"zh-CN,zh;q=0.8",
+            "Connection":"keep-alive",
+            "Cookie": "seraph.rememberme.cookie=13497%3A79c9cb1850731906f8032182384f907823e86b2c; atlassian.xsrf.token=BQLS-EYDV-WTXN-P2F1|61eadd4d14ffb30b80fd0ce7011bf78bf7b6964d|lin; _gitlab_session=492390433436b9ffe07f2d4c1a07898a; issuable_sort=id_desc; JSESSIONID=3892F3B07F7BF29272DCBD9C3ED53C92",
+            "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8",
+            "Host":"192.168.0.221:7002", // 根据network修改
+            "Referer":"http://192.168.0.221:7002/issues/?filter=-4&jql=issuetype%20%3D%20Bug%20order%20by%20created%20DESC",//  这里需要和url统一
+            "User-Agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36",
+        }
     },function (error,response,body) {
-        var buf =  iconv.decode(body, 'gb2312');
-        var $ = cheerio.load(buf);
-        $('script').remove();
-        $("body").append('<script src="/js/jquery.js"></script>');
-        /!*fs.writeFile('./view/1.html',$("body").html(),function (err) {
-            if(err){
-                console.log('出现错误!')
-            }
-        })*!/
-        console.log($("a"));
-        /!*res.send($("a"));*!/
-    });
-})*/
-app.get('/',function (req,res) {
-    request.get({url:'https://www.tianyancha.com/search?key=%E5%A4%A7%E8%BF%9E%E6%B1%87%E8%9E%8D&checkFrom=searchBox',encoding:null},function(err,response,body){
-       /* var buf = iconv.decode(body, 'gb2312');*/
-        var $ = cheerio.load(body);
-        res.send($('.f13').html());
-    });
+        if (!error && response.statusCode == 200){
+            res.send(body)
+        }
+    })
 })
 
 app.listen(3000,function () {
-    console.log('3000');
+    console.log('3000appPrac');
 })
